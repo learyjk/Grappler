@@ -21,6 +21,10 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
+        public bool isSwinging;
+        public Vector2 ropeHook;
+        [SerializeField] private float swingForce = 10f;
+
         private void Awake()
         {
             // Setting up references.
@@ -52,6 +56,43 @@ namespace UnityStandardAssets._2D
 
         public void Move(float move, bool crouch, bool jump)
         {
+            if (isSwinging)
+            {
+                var playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
+                //Debug.DrawLine(transform.position, playerToHookDirection, Color.red, 0f);
+
+                Vector2 perpendicularDirection;
+
+                if (move < 0)
+                {
+                    perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
+                    var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
+                    //Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
+
+                }
+                else
+                {
+                    perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
+                    var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
+                    //Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
+                }
+
+                var force = perpendicularDirection * swingForce;
+                m_Rigidbody2D.AddForce(force, ForceMode2D.Force);
+
+                if (move > 0 && !m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+                    // Otherwise if the input is moving the player left and the player is facing right...
+                else if (move < 0 && m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+            }
+
             // If crouching, check to see if the character can stand up
             if (!crouch && m_Anim.GetBool("Crouch"))
             {
@@ -66,7 +107,7 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("Crouch", crouch);
 
             //only control the player if grounded or airControl is turned on
-            if (m_Grounded || m_AirControl)
+            if ((m_Grounded || m_AirControl) && !isSwinging)
             {
                 // Reduce the speed if crouching by the crouchSpeed multiplier
                 move = (crouch ? move*m_CrouchSpeed : move);

@@ -13,7 +13,6 @@ public class RopeGun : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Shoot();
-            
         }
     }
 

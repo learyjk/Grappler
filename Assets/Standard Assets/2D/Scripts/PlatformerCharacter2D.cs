@@ -21,9 +21,12 @@ namespace UnityStandardAssets._2D
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
+        //rope swinging variables
         public bool isSwinging;
         public Vector2 ropeHook;
         [SerializeField] private float swingForce = 10f;
+        public float climbSpeed = 3f;
+        private bool isColliding;
 
         private void Awake()
         {
@@ -59,21 +62,21 @@ namespace UnityStandardAssets._2D
             if (isSwinging)
             {
                 var playerToHookDirection = (ropeHook - (Vector2)transform.position).normalized;
-                //Debug.DrawLine(transform.position, playerToHookDirection, Color.red, 0f);
+                //Debug.DrawLine(transform.position, ropeHook, Color.red, 0f);
 
                 Vector2 perpendicularDirection;
 
                 if (move < 0)
                 {
                     perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
-                    var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
+                    //var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
                     //Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
 
                 }
                 else
                 {
                     perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
-                    var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
+                    //var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
                     //Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
                 }
 

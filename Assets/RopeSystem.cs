@@ -23,6 +23,9 @@ public class RopeSystem : MonoBehaviour
     private List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
 
+    public float climbSpeed = 3f;
+    private bool isColliding;
+
     private Dictionary<Vector2, int> wrapPointsLookup = new Dictionary<Vector2, int>();
 
 
@@ -91,6 +94,7 @@ public class RopeSystem : MonoBehaviour
 
         HandleInput(aimDirection);
         UpdateRopePositions();
+        HandleRopeLength();
     }
 
     private void SetCroshairPosition(float aimAngle)
@@ -229,4 +233,25 @@ public class RopeSystem : MonoBehaviour
         return orderedDictionary.Any() ? orderedDictionary.First().Value : Vector2.zero;
     }
 
+    private void HandleRopeLength()
+    {
+        if (Input.GetAxis("Vertical") >= 1f && ropeAttached && !isColliding)
+        {
+            ropeJoint.distance -= Time.deltaTime * climbSpeed;
+        }
+        else if (Input.GetAxis("Vertical") < 0f && ropeAttached)
+        {
+            ropeJoint.distance += Time.deltaTime * climbSpeed;
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D colliderStay)
+    {
+        isColliding = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D colliderOnExit)
+    {
+        isColliding = false;
+    }
 }

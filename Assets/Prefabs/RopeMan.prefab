@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 3114142133716636726}
   - component: {fileID: 3114142133716636720}
   - component: {fileID: 3114142133824262862}
+  - component: {fileID: 7132406852792119403}
   m_Layer: 8
   m_Name: RopeMan
   m_TagString: Player
@@ -224,7 +225,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3114142133824262849}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -295,7 +296,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3114142133824262849}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -453,6 +454,7 @@ MonoBehaviour:
     m_Bits: 1
   ropeMaxDistance: 3
   ropeMinDistance: 1
+  ropePositions: []
   climbSpeed: 3
 --- !u!82 &3114142133824262862
 AudioSource:
@@ -550,6 +552,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!70 &7132406852792119403
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114142133824262849}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.010619879, y: -0.08141911}
+  m_Size: {x: 0.2776122, y: 1.0139239}
+  m_Direction: 0
 --- !u!1 &3114142133824262851
 GameObject:
   m_ObjectHideFlags: 0

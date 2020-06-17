@@ -9,13 +9,16 @@ public class GameMaster : MonoBehaviour
     public static GameMaster gm;
     public int currentLevel;
 
-    void Start()
+    void Awake()
     {
         if (gm == null)
         {
+            Debug.Log("Assigning the GM!");
             gm = GameObject.FindWithTag("GM").GetComponent<GameMaster>();
+            DontDestroyOnLoad(gm);
+            gm.currentLevel = 0;
+            Debug.Log(gm.currentLevel);
         }
-        currentLevel = 0;
     }
 
     public static void KillPlayer(GameObject player)
@@ -27,8 +30,8 @@ public class GameMaster : MonoBehaviour
 
     public static void NextLevel()
     {
-        //Debug.Log("SANDBOX: Go to next level");
+        SceneManager.LoadScene(gm.currentLevel + 1);
         gm.currentLevel += 1;
-        SceneManager.LoadScene(gm.currentLevel);
+        Debug.Log(gm.currentLevel);
     }
 }

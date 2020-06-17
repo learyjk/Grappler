@@ -21,7 +21,7 @@ public class RopeSystem : MonoBehaviour
     public LayerMask ropeLayerMask;
     [SerializeField] public float ropeMaxDistance = 10f;
     [SerializeField] public float ropeMinDistance = 1f;
-    private List<Vector2> ropePositions = new List<Vector2>();
+    public List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
 
     public float climbSpeed = 3f;
@@ -316,7 +316,7 @@ public class RopeSystem : MonoBehaviour
         }
         else if (Input.GetAxis("Vertical") < 0f && ropeAttached)
         {
-            if (ropeJoint.distance <= ropeMaxDistance)
+            if (GetRopeLength() <= ropeMaxDistance)
             {
                 ropeJoint.distance += Time.deltaTime * climbSpeed;
             }
@@ -332,4 +332,28 @@ public class RopeSystem : MonoBehaviour
     {
         isColliding = false;
     }
+
+    public float GetRopeLength()
+    {
+        if (ropePositions.Count == 0)
+        {
+            return 0f;
+        }
+        else if (ropePositions.Count == 1)
+        {
+            float d = Vector2.Distance(ropePositions[0], transform.position);
+            return d;
+        }
+        else if (ropePositions.Count > 1)
+        {
+            float d = 0f;
+            for (var i = ropePositions.Count - 1; i > 0; i--)
+            {
+                d += Vector2.Distance(ropePositions[i], ropePositions[i-1]);
+            }
+            d += Vector2.Distance(ropePositions.Last(), transform.position);
+            return d;
+        }
+        return 0f;
+    } 
 }

@@ -64,22 +64,24 @@ namespace UnityStandardAssets._2D
 
                 Vector2 perpendicularDirection;
 
-                if (move < 0)
+                if (move != 0)
                 {
-                    perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
-                    //var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
-                    //Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
+                    if (move < 0)
+                    {
+                        perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
+                        //var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
+                        //Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
 
+                    }
+                    else
+                    {
+                        perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
+                        //var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
+                        //Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
+                    }
+                    var force = perpendicularDirection * swingForce;
+                    m_Rigidbody2D.AddForce(force, ForceMode2D.Force);
                 }
-                else
-                {
-                    perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
-                    //var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
-                    //Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
-                }
-
-                var force = perpendicularDirection * swingForce;
-                m_Rigidbody2D.AddForce(force, ForceMode2D.Force);
 
                 if (move > 0 && !m_FacingRight)
                 {

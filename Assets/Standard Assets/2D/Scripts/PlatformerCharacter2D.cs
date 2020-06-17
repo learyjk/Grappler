@@ -25,8 +25,6 @@ namespace UnityStandardAssets._2D
         public bool isSwinging;
         public Vector2 ropeHook;
         [SerializeField] private float swingForce = 10f;
-        public float climbSpeed = 3f;
-        private bool isColliding;
 
         private void Awake()
         {

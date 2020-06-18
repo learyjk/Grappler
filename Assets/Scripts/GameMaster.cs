@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets._2D;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
@@ -33,5 +34,12 @@ public class GameMaster : MonoBehaviour
         SceneManager.LoadScene(gm.currentLevel + 1);
         gm.currentLevel += 1;
         Debug.Log(gm.currentLevel);
+    }
+
+    public static void Victory()
+    {
+        Debug.Log("You win!");
+        Text winText = GameObject.Find("WinText").GetComponent<Text>();
+        winText.text = "You Win!";
     }
 }
